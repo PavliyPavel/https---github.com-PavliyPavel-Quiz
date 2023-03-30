@@ -16,8 +16,8 @@
             <div class="quiz__progressbar">
                 <div id="progress-fill" class="quiz__progress-fill"></div>
             </div>
-            <div class="quiz_progress-questions">
-                <strong id="question-number">0</strong>
+            <div  class="quiz_progress-questions">
+                <strong id="question-number"></strong>
                 <span>/</span>
                 <span id="total-questions">
                     <script>
@@ -26,22 +26,29 @@
                 </span>
             </div>
         </div>
-        <div  class="quiz__question">
-            <strong id="question-position">
-                1
-            </strong>
+        <div id="question-wrap"  class="quiz__question">
+            <strong id="question-position"></strong>
             &nbsp;-&nbsp;
             <span id="question">
                 Как писать код? 
             </span>
         </div>
         <div id="answers" class="quiz_answers">
-            <div class="quiz__answer quiz__answer_false">Вариант 1</div>
-            <div class="quiz__answer ">Вариант 2</div>
-            <div class="quiz__answer">Вариант 3</div>
-            <div class="quiz__answer">Вариант 4</div>
+            <div class="quiz__answer"></div>
+            <div class="quiz__answer"></div>
+            <div class="quiz__answer"></div>
+            <div class="quiz__answer"></div>
         </div>
         <div id="next" class="quizz__btn">Следующий вопрос</div>
+        <div id="result" class="quiz__result">
+            <div class="quiz__result-title"></div>
+            <div class="quiz__result-info">
+                <span>Верных ответов</span><br>
+                <span id="valid-answers" class="quiz__result-num"></span>
+                <span>из</span>
+                <span id="result-total-questions" class="quiz__result-num"></span>
+            </div>
+        </div>
     </div>
     <script src="index.js"></script>
 </body>
