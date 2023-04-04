@@ -1,11 +1,10 @@
-
+import data from "./dataJSON.json" assert {type: 'json'};
 const dom = {
     title: document.getElementById('title'),
     progress: {
         progressFill: document.getElementById('progress-fill'),
         questionNumber: document.getElementById('question-number'),
         totalQuestions: document.getElementById('total-questions')
-        
     },
     questionWrap: document.getElementById('question-wrap'),
     step:{
@@ -14,19 +13,27 @@ const dom = {
     },
     answers: document.getElementById('answers'),
     next: document.getElementById('next'),
+    timer:{
+        timerCounter: document.getElementById('timer__counter'),
+        timerFill: document.getElementById('timer__body'),
+        timerWrap: document.getElementById('timer-wrap'),
+        timeIsOver: document.getElementById('timeIsOver')
+    },
     result: {
         resultBlock: document.getElementById('result'),
         validAnswers: document.getElementById('valid-answers'),
         questionsCount: document.getElementById('result-total-questions'),
     }
-
+    
 }
+
 dom.title.innerHTML = data.title;
+dom.timer.timerCounter.innerHTML = data.timeToAnswer;
 
 let questionTotal = data.questions.length;
 let step = 0;
 let result = 0;
-let = validAnswersCount = 0;
+let validAnswersCount = 0;
 
 function renderProgress(total,step){
     dom.progress.progressFill.style.width = (step /total) * 100  + "%" ;
@@ -83,7 +90,6 @@ dom.answers.onclick = (event) => {
 
         const answerNumber = target.dataset.id;
         const isValid = checkAnswer(step,answerNumber);
-        //console.log(isValid)
         const answerClass = isValid 
         ? 'quiz__answer_true': 'quiz__answer_false';
         target.classList.add(answerClass);
@@ -115,8 +121,29 @@ function renderResult(){
     dom.answers.style.display = 'none';
     dom.next.style.display = 'none';
     dom.questionWrap.style.display = 'none';
+    dom.timer.timerWrap.style.display ='none';
 
     dom.result.resultBlock.style.display = 'block';
     dom.result.validAnswers.innerHTML = validAnswersCount;
     dom.result.questionsCount.innerHTML = questionTotal;
+}
+
+renderTimer();
+function renderTimer() {
+    let intervalId = setTimeout(function timer() {
+        if (data.timeToAnswer != 0) {
+            dom.timer.timerCounter.innerHTML = (--data.timeToAnswer);
+            intervalId = setTimeout(timer,1000);
+        }else{
+            faildQuiz();
+        }
+    },1000);    
+}
+
+function faildQuiz() {
+    changeButtonOnResult();
+    isDisableButton(false);
+
+    dom.timer.timeIsOver.innerHTML = '&nbsp;-&nbsp;' + 'Вы не успели завершить Quiz!!!'
+    dom.timer.timerFill.style.backgroundColor = 'red';
 }

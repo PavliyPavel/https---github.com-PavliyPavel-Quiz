@@ -8,48 +8,52 @@
     <title>Quiz опрос</title>
 </head>
 <body>
-
-    <div class="quiz">
-        <script src="data.js"></script>
-        <div id="title" class="quiz__title">Название опроса</div>
-        <div class="quiz__progress-wrap">
-            <div class="quiz__progressbar">
-                <div id="progress-fill" class="quiz__progress-fill"></div>
+        <div class="quiz">
+            <div id="title" class="quiz__title"></div>
+            <div class="quiz__progress-wrap">
+                <div class="quiz__progressbar">
+                    <div id="progress-fill" class="quiz__progress-fill"></div>
+                </div>
+                <div  class="quiz_progress-questions">
+                    <strong id="question-number"></strong>
+                    <span>/</span>
+                    <span id="total-questions"></span>
+                </div>
             </div>
-            <div  class="quiz_progress-questions">
-                <strong id="question-number"></strong>
-                <span>/</span>
-                <span id="total-questions">
-                    <script>
-                        document.getElementById('total-questions').innerHTML = data.questions.length;
-                    </script>
+            <div id="question-wrap"  class="quiz__question">
+                <strong id="question-position"></strong>
+                &nbsp;-&nbsp;
+                
+                <span id="question">
+                    Как писать код? 
                 </span>
             </div>
-        </div>
-        <div id="question-wrap"  class="quiz__question">
-            <strong id="question-position"></strong>
-            &nbsp;-&nbsp;
-            <span id="question">
-                Как писать код? 
-            </span>
-        </div>
-        <div id="answers" class="quiz_answers">
-            <div class="quiz__answer"></div>
-            <div class="quiz__answer"></div>
-            <div class="quiz__answer"></div>
-            <div class="quiz__answer"></div>
-        </div>
-        <div id="next" class="quizz__btn">Следующий вопрос</div>
-        <div id="result" class="quiz__result">
-            <div class="quiz__result-title"></div>
-            <div class="quiz__result-info">
-                <span>Верных ответов</span><br>
-                <span id="valid-answers" class="quiz__result-num"></span>
-                <span>из</span>
-                <span id="result-total-questions" class="quiz__result-num"></span>
+            <div id="answers" class="quiz_answers">
+                <div class="quiz__answer"></div>
+                <div class="quiz__answer"></div>
+                <div class="quiz__answer"></div>
+                <div class="quiz__answer"></div>
+            </div>
+            <div id="next" class="quizz__btn">Следующий вопрос</div>
+            <div id="timer-wrap" class="timer-wrap">
+                    <div id="timer__body" class="timer__body">
+                        <span id="timer__counter" class="timer__counter"></span>
+                    </div>
+                    
+                    <span id="timeIsOver">
+                        
+                    </span>
+            </div>
+            <div id="result" class="quiz__result">
+                <div class="quiz__result-title"></div>
+                <div class="quiz__result-info">
+                    <span>Верных ответов</span><br>
+                    <span id="valid-answers" class="quiz__result-num"></span>
+                    <span>из</span>
+                    <span id="result-total-questions" class="quiz__result-num"></span>
+                </div>
             </div>
         </div>
-    </div>
-    <script src="index.js"></script>
+    <script type="module" src="index.js" ></script>
 </body>
 </html>
