@@ -1,4 +1,5 @@
-import data from "./dataJSON.json" assert {type: 'json'};
+import data from "/dataJSON.json" assert {type: 'json'};
+
 const dom = {
     title: document.getElementById('title'),
     progress: {
@@ -32,8 +33,9 @@ dom.timer.timerCounter.innerHTML = data.timeToAnswer;
 
 let questionTotal = data.questions.length;
 let step = 0;
-let result = 0;
 let validAnswersCount = 0;
+let ArrayAnswers;
+let faild = false;
 
 function renderProgress(total,step){
     dom.progress.progressFill.style.width = (step /total) * 100  + "%" ;
@@ -70,7 +72,8 @@ function renderQuiz() {
     renderQuestion(questionTotal, step);
     renderProgress(questionTotal, step);
     renderAnswers((questionTotal > step) ? step : (step - 1));
-    isDisableButton(true);
+    isDisableButtonNext(true);
+    ArrayAnswers = findAnswers();
     if (step == questionTotal) {
         renderResult();
     }
@@ -79,22 +82,36 @@ renderQuiz();
 
 
 dom.next.onclick = () => {
-    step < questionTotal ? step++ : alert("Тест окончен");
-    renderQuiz();
+    if (dom.next.dataset.result == 'result' && faild == true) {
+        renderResult();
+    }else{
+        step < questionTotal ? step++ : alert("Тест окончен");
+        renderQuiz();
+    }
 }
 
 dom.answers.onclick = (event) => {
     const target = event.target;
-
     if (target.classList.contains('quiz__answer')) {
-
+        
         const answerNumber = target.dataset.id;
         const isValid = checkAnswer(step,answerNumber);
         const answerClass = isValid 
         ? 'quiz__answer_true': 'quiz__answer_false';
         target.classList.add(answerClass);
-        isDisableButton(false);
-
+        if (isValid) {
+            for (const iterator of ArrayAnswers) {
+                iterator.classList.add('quiz__btn_disable');
+            }
+        }else{
+            for (const iterator of ArrayAnswers) {
+                iterator.classList.add('quiz__btn_disable');
+                if(data.questions[step].validAnswer == iterator.dataset.id){
+                    iterator.classList.add('quiz__answer_true');
+                }
+            }
+        }
+        isDisableButtonNext(false);
         isValid ? validAnswersCount++ : validAnswersCount;
     }
 }
@@ -109,11 +126,18 @@ function changeButtonOnResult() {
         dom.next.dataset.result = 'result';
 }   
 
-function isDisableButton(isDisable){
+function isDisableButtonNext(isDisable){
     if (isDisable) {
         dom.next.classList.add('quiz__btn_disable');
     }else{
         dom.next.classList.remove('quiz__btn_disable');
+    }
+}
+
+function isDisableButtons(){
+    for (const iterator of ArrayAnswers) {
+        iterator.classList.add('quiz__btn_disable');
+
     }
 }
 
@@ -123,6 +147,8 @@ function renderResult(){
     dom.questionWrap.style.display = 'none';
     dom.timer.timerWrap.style.display ='none';
 
+    renderProgress(questionTotal,step);
+    
     dom.result.resultBlock.style.display = 'block';
     dom.result.validAnswers.innerHTML = validAnswersCount;
     dom.result.questionsCount.innerHTML = questionTotal;
@@ -130,20 +156,36 @@ function renderResult(){
 
 renderTimer();
 function renderTimer() {
-    let intervalId = setTimeout(function timer() {
+    setTimeout(function timer() {
         if (data.timeToAnswer != 0) {
+            if (dom.next.dataset.result == 'result') {
+                return 0;
+            }
             dom.timer.timerCounter.innerHTML = (--data.timeToAnswer);
-            intervalId = setTimeout(timer,1000);
+            setTimeout(timer,1000);
         }else{
             faildQuiz();
         }
     },1000);    
 }
 
+function findAnswers(params) {
+    ArrayAnswers = document.getElementsByClassName('quiz__answer');
+    return ArrayAnswers;
+}
+
 function faildQuiz() {
     changeButtonOnResult();
-    isDisableButton(false);
+    isDisableButtonNext(false);
+    isDisableButtons();
+    faild = true;
+    for (const iterator of ArrayAnswers) {
+        if (iterator.classList.contains('quiz__answer_true')) {
+          step++;
+        }
+    }
 
     dom.timer.timeIsOver.innerHTML = '&nbsp;-&nbsp;' + 'Вы не успели завершить Quiz!!!'
     dom.timer.timerFill.style.backgroundColor = 'red';
 }
+
