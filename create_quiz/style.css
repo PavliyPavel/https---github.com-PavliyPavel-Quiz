@@ -5,6 +5,7 @@
     --gradient-quiz: linear-gradient(to right bottom,#7a95ec, #77eeb9);
     --gradient-quiz-answer-active: linear-gradient(to right bottom,#45558b, #438567);
     --gradient-fill-bar: linear-gradient(to left top,yellow,#77ee99);
+    --gradient-passiv-false: linear-gradient(to right bottom,#5c3959, #630404);
     --gradient-false: linear-gradient(to right bottom,#f89af0, #ff0000);
     --gradient-body: linear-gradient(to left bottom,#7a7a7a,#7a95ec);
     --glass_bg: rgba(255,255,255, 0.2);
@@ -56,7 +57,7 @@ body{
     background: var(--glass_bg);
     
 }
-.quizz__btn {
+.quizz__btn, .addAnswer__btn, .deleteAnswer__btn {
     cursor: pointer;
     border: var(--border_block);
     background: var(--gradient-fill-bar);
@@ -80,7 +81,7 @@ body{
     width: 100%;
     height: 36px;
     background: rgba(0,0,0, 0.3);
-    padding: 5px 60px 5px 20px;
+    padding: 5px 60px 5px 60px;
     border-radius: var(--radius);
     border:none;
   }
@@ -107,6 +108,7 @@ body{
     border-radius: 5px;
   }
   .deleteAnswer {
+
     cursor: pointer;
     position: absolute;
     text-align: center;
@@ -116,14 +118,36 @@ body{
     height: 32px;
     padding-top: 7px;
     border:none;
-    background: var( --gradient-false);
+    background: var(--gradient-passiv-false);
     color:#fff;
     border-radius: 50% 
     
   }
+  .deleteAnswer:hover{
+    background: var( --gradient-false);
+  }
+  .boolAnswer:hover{
+    background: var( --gradient-fill-bar);
+
+  }
+  .boolAnswer {
+    content: '\2713';    
+    cursor: pointer;
+    position: absolute;
+    text-align: center;
+    top: 2px;
+    left: 2px;
+    width: 40px;
+    height: 32px;
+    padding-top: 7px;
+    border:none;
+    background: var(--gradient-quiz-answer-active);
+    color:#fff;
+    border-radius: 50% 
+  } 
+ 
 
 .create_quiz{
-    
     width: 660px;
     height: auto;
     min-height: 560px;

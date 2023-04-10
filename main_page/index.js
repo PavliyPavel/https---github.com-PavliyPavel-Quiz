@@ -11,7 +11,7 @@ dom.buttons.onclick = (event) => {
     if (target.classList.contains('button')) {
         switch (target.id) {
             case 'list_quizzes':
-                window.location.href = '/list_quizzes/index.html';
+                window.location.href = '/Quiz/index.html';
                 break;
             case 'create_quize':
                 window.location.href = '/create_quiz/index.html';

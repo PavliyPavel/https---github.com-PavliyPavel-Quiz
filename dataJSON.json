@@ -4,7 +4,7 @@
     "questions":
     [
         {
-            "qustion":"Вопрос 1",
+            "question":"Вопрос 1",
             "answers":
             [
                 "1",
@@ -14,7 +14,7 @@
             ],
             "validAnswer":2
         },
-        {"qustion":"Вопрос 2",
+        {"question":"Вопрос 2",
             "answers":
             [
                 "1",
@@ -23,7 +23,7 @@
             ],
             "validAnswer":1
         },
-        {"qustion":"Вопрос 3",
+        {"question":"Вопрос 3",
             "answers":
             [
                 "1",
@@ -34,7 +34,7 @@
             ],
             "validAnswer":4
         },
-        {"qustion":"Вопрос 4",
+        {"question":"Вопрос 4",
             "answers":
             [
                 "1",

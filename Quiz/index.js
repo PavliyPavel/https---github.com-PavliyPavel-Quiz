@@ -1,4 +1,6 @@
-import data from "/dataJSON.json" assert {type: 'json'};
+import data1 from "/dataJSON.json" assert {type: 'json'};
+
+let data = JSON.parse(localStorage.getItem('quiz'));
 
 const dom = {
     title: document.getElementById('title'),
@@ -28,8 +30,9 @@ const dom = {
     
 }
 
+
 dom.title.innerHTML = data.title;
-dom.timer.timerCounter.innerHTML = data.timeToAnswer;
+dom.timer.timerCounter.innerHTML =  data.timeToAnswer;
 
 let questionTotal = data.questions.length;
 let step = 0;
@@ -46,7 +49,7 @@ function renderProgress(total,step){
 
 function renderQuestion(total,step){
     if (total > step) {
-        dom.step.question.innerHTML = data.questions[step].qustion;
+        dom.step.question.innerHTML = data.questions[step].question;
         dom.step.questionPosition.innerHTML = step + 1;
     }
 }
@@ -66,9 +69,7 @@ function renderAnswers(step) {
 }
 
 function renderQuiz() {
-    if ((step+1) == questionTotal) {
-        changeButtonOnResult();
-    }
+   // if ((step+1) == questionTotal) {changeButtonOnResult();}
     renderQuestion(questionTotal, step);
     renderProgress(questionTotal, step);
     renderAnswers((questionTotal > step) ? step : (step - 1));
@@ -92,6 +93,11 @@ dom.next.onclick = () => {
 
 dom.answers.onclick = (event) => {
     const target = event.target;
+    //Проверка на последний вопрос, после ответа кнопка меняется на "Показать результыты"
+   if ((step+1) == questionTotal) {
+    changeButtonOnResult();
+    }
+
     if (target.classList.contains('quiz__answer')) {
         
         const answerNumber = target.dataset.id;
@@ -169,7 +175,7 @@ function renderTimer() {
     },1000);    
 }
 
-function findAnswers(params) {
+function findAnswers() {
     ArrayAnswers = document.getElementsByClassName('quiz__answer');
     return ArrayAnswers;
 }
