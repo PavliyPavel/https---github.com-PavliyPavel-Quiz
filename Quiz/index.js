@@ -15,6 +15,7 @@ const dom = {
     },
     answers: document.getElementById('answers'),
     next: document.getElementById('next'),
+    homeBtn:document.getElementById('home'),
     timer:{
         timerCounter: document.getElementById('timer__counter'),
         timerFill: document.getElementById('timer__body'),
@@ -88,6 +89,10 @@ dom.next.onclick = () => {
         step < questionTotal ? step++ : alert("Тест окончен");
         renderQuiz();
     }
+}
+
+dom.homeBtn.onclick = () =>{
+    window.location.href = '/main_page/index.html';
 }
 
 dom.answers.onclick = (event) => {

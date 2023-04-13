@@ -8,20 +8,28 @@
     <title></title>
 </head>
 <body>
-    <div class="create_quiz">
-        <div id="title" class="quiz__title">
-            <form>
-                <input id="input_title" class="input_title input" type="text"></input>
-                <input id="input_time" class="input_time input" type="number"></input>
-            </form>
+    <div>
+        <div id="home" class="home__btn">
+            На главную страницу
         </div>
-        <div id="questions" class="questions">
-            
+        <div class="create_quiz">
+            <div id="title" class="quiz__title">
+                <form>
+                    <input id="input_title" class="input_title input" type="text"></input>
+                    <input id="input_time" class="input_time input" type="number"></input>
+                </form>
+            </div>
+            <div id="questions" class="questions"></div>
+            <div id="addQuestion" class="quizz__btn">
+                Добавить вопрос
+            </div>
+            <div id="createQuiz" class="quizz__btn">
+                Создать тест
+            </div>
+            <span id="inputIsEmpty"></span>
+            <span id="boolIsEmpty"></span>
         </div>
-            <div id="addQuestion" class="quizz__btn">Добавить вопрос</div>
-            <div id="createQuiz" class="quizz__btn">Создать тест</div>
-            <span id="inputIsEmpty">
-            </span>
+        
     </div>
     <script src="index.js" ></script>
 </body>

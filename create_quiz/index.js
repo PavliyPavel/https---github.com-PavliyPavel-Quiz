@@ -2,6 +2,7 @@ const dom = {
     buttons: {
         addQuestion: document.getElementById('addQuestion'),
         createQuiz:document.getElementById('createQuiz'),
+        homeBtn:document.getElementById('home'),
     },
     inputs:{
         inputTitle: document.getElementById('input_title'),
@@ -9,18 +10,23 @@ const dom = {
     },
     questions: document.getElementById('questions'),
     inputIsEmpty: document.getElementById('inputIsEmpty'),
+    boolIsEmpty: document.getElementById('boolIsEmpty'),
 
     
 }
 let idAnswer = 1;
 let idQuastion = 1;
 
+dom.buttons.homeBtn.onclick = () =>{
+    window.location.href = '/main_page/index.html';
+}
+
 dom.buttons.addQuestion.onclick = () => {
   dom.questions.append(addHtmlQuestion());
 }
 
 dom.buttons.createQuiz.onclick = () => {
-    if (notifyUserEmpty(isValueInputEmpty())){
+    if (notifyUserInputEmpty(isValueInputEmpty())  || boolIsEmpty()){
         return;
     }
     let titleQuiz = document.getElementById('input_title').value;
@@ -93,7 +99,7 @@ function addHtmlQuestion() {
                 <div id="deleteQuestion" class="deleteAnswer__btn">Удалить вопрос</div>
             
     `;
-    idQuastion++;//?????? уверен?
+    idQuastion++;
    return div;
 }
 
@@ -123,9 +129,8 @@ function findValidAnswer(question) {
             return ++variantAnswer;
         }
     }
+    return false;
 }
-
-
 
 function saveQuiz() {
     
@@ -164,16 +169,36 @@ function isValueInputEmpty() {
     return false;
 }
 
-function notifyUserEmpty(bool) {
+function notifyUserInputEmpty(bool) {
     if (bool) {
         dom.inputIsEmpty.innerHTML = 'Не все поля заполнены!!!'
         dom.inputIsEmpty.style.color = 'red';
         setTimeout(() => {
-            dom.inputIsEmpty.innerHTML = ''
+            dom.inputIsEmpty.innerHTML = '';
         }, 2000);
         return true;
     }
     return false;
 }
 
+function boolIsEmpty() {
+    const questions = document.querySelectorAll('.quiz');
+    for (const question of questions) {
+       if (notifyUserBoolEmpty(!findValidAnswer(question))) {
+            return true;
+       } 
+    }
+    return false;
+}
 
+function notifyUserBoolEmpty(bool) {
+    if (bool) {
+        dom.boolIsEmpty.innerHTML = 'Должен быть хотя бы один правильный ответ!!!'
+        dom.boolIsEmpty.style.color = 'red';
+        setTimeout(() => {
+            dom.boolIsEmpty.innerHTML = '';
+        }, 2000);
+        return true;
+    }
+    return false;
+}

@@ -1,9 +1,16 @@
 
 const dom = {
     buttons: document.getElementById('buttons'),
+    homeBtn:document.getElementById('home'),
+    
+
 }
 
 renderNamesQuiz();
+
+dom.homeBtn.onclick = () =>{
+    window.location.href = '/main_page/index.html';
+}
 
 function renderNamesQuiz() {
     
