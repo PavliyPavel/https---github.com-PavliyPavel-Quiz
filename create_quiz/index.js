@@ -8,18 +8,24 @@ const dom = {
         inputTime: document.getElementById('input_time'),
     },
     questions: document.getElementById('questions'),
+    inputIsEmpty: document.getElementById('inputIsEmpty'),
+
     
 }
-let idAnswer = 1;//?  <----------- поправить!!Ведь так?
-let idQuastion = 1;//? <---
+let idAnswer = 1;
+let idQuastion = 1;
 
 dom.buttons.addQuestion.onclick = () => {
   dom.questions.append(addHtmlQuestion());
 }
 
 dom.buttons.createQuiz.onclick = () => {
-   localStorage.setItem('quiz',toJSON(saveQuiz()));
-   window.location.href = '/main_page/index.html';
+    if (notifyUserEmpty(isValueInputEmpty())){
+        return;
+    }
+    let titleQuiz = document.getElementById('input_title').value;
+    localStorage.setItem(titleQuiz,toJSON(saveQuiz()));
+    window.location.href = '/main_page/index.html';
 }
 
 function toJSON(quiz) {
@@ -30,20 +36,27 @@ dom.questions.onclick = (event) => {
     const target = event.target;
     if(target.classList.contains('addAnswer__btn')){
         activityAddAnswer(target);
-    }else if(target.classList.contains('deleteAnswer')){
+        return;
+    }
+    if(target.classList.contains('deleteAnswer')){
         activityDeleteAnswer(target);
-    }else if(target.classList.contains('deleteAnswer__btn')){
+        return;
+    }
+    if(target.classList.contains('deleteAnswer__btn')){
         activityDeleteQuestion(target);
-    }else if(target.classList.contains('boolAnswer')){
+        return;
+    }
+    if(target.classList.contains('boolAnswer')){
         activityBoolAnswer(target);
+        return;
     }
 }
 
 function activityAddAnswer(target) {
         childs = target.closest('.quiz').children;
-        for (let i of childs) {
-             if (i.id == 'answers') {
-                 i.append(addHtmlAnswer());
+        for (let child of childs) {
+             if (child.id == 'answers') {
+                child.append(addHtmlAnswer());
              }
         }
 }
@@ -58,9 +71,9 @@ function activityDeleteQuestion(target) {
 
 function activityBoolAnswer(target) {
         childs = target.closest('.quiz').querySelectorAll('.boolAnswer');
-        for (const i of childs) {
-              i.dataset.active = false;
-              i.style.background = 'linear-gradient(to right bottom,#45558b, #438567)';  
+        for (const child of childs) {
+            child.dataset.active = false;
+            child.style.background = 'linear-gradient(to right bottom,#45558b, #438567)';  
         }
         target.dataset.active = true;
         target.style.background = 'linear-gradient(to left top,yellow,#77ee99)';    
@@ -104,15 +117,18 @@ function findValidAnswer(question) {
     for (const answer of answers) {
         variantAnswers.push(answer.dataset.active);
     }
-    for (let i = 0; i < variantAnswers.length; i++) {
-        console.log(variantAnswers[i]);
-        if (variantAnswers[i] === "true") {
-            return ++i;
+    for (let variantAnswer = 0; variantAnswer < variantAnswers.length; variantAnswer++) {
+        console.log(variantAnswers[variantAnswer]);
+        if (variantAnswers[variantAnswer] === "true") {
+            return ++variantAnswer;
         }
     }
 }
 
+
+
 function saveQuiz() {
+    
     let quiz = {
         title: "",
         timeToAnswer: 0,
@@ -137,3 +153,27 @@ function saveQuiz() {
 
     return quiz;
 }
+
+function isValueInputEmpty() {
+    let inputs = document.querySelectorAll(".input")
+    for (const input of inputs) {
+        if (input.value === '') {
+            return true;
+        }
+    }
+    return false;
+}
+
+function notifyUserEmpty(bool) {
+    if (bool) {
+        dom.inputIsEmpty.innerHTML = 'Не все поля заполнены!!!'
+        dom.inputIsEmpty.style.color = 'red';
+        setTimeout(() => {
+            dom.inputIsEmpty.innerHTML = ''
+        }, 2000);
+        return true;
+    }
+    return false;
+}
+
+

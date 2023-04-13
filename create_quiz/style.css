@@ -157,3 +157,8 @@ body{
     display: flex;
     flex-direction: column;
 }
+
+#inputIsEmpty{
+  margin-top: 10px;
+  text-align: center;
+}

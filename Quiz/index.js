@@ -1,6 +1,5 @@
 import data1 from "/dataJSON.json" assert {type: 'json'};
-
-let data = JSON.parse(localStorage.getItem('quiz'));
+let data = JSON.parse(localStorage.getItem(getCookie('quiz')));
 
 const dom = {
     title: document.getElementById('title'),
@@ -195,3 +194,14 @@ function faildQuiz() {
     dom.timer.timerFill.style.backgroundColor = 'red';
 }
 
+function getCookie(cookieName) {
+    var name = cookieName + "=";
+    var splitCookies = document.cookie.split(';');
+    for(var i = 0; i < splitCookies.length; i++) {
+        var Cookie = splitCookies[i];
+         if (Cookie.indexOf(name) == 0) {
+            return Cookie.substring(name.length, Cookie.length);
+         }
+     }
+    return "";
+}
